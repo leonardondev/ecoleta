@@ -6,12 +6,12 @@ export async function up(knex: Knex) {
     
     table.integer('point_id')
       .notNullable()
-      .refereces('id')
+      .references('id')
       .inTable('points');
 
     table.integer('item_id')
       .notNullable()
-      .refereces('id')
+      .references('id')
       .inTable('items');
   })
 }
