@@ -1,63 +1,22 @@
 import express from 'express';
-import knex from './database/connection';
+
+import PointsController from './controllers/PonitsCOntroller';
+import ItemsController from './controllers/ItemsController';
 
 const routes = express.Router();
+const pointsController = new PointsController();
+const itemsController = new ItemsController();
 
 //listar os itens de coleta
-routes.get('/items', async (request, response) => {
-  const items = await knex('items').select('*');
-
-  const serializedItems = items.map(item => {
-    return {
-      id: item.id,
-      title: item.title,
-      image_url: `http://localhost:3333/uploads/${item.image}`,
-    }
-  });
-
-  return response.json(serializedItems);
-});
+routes.get('/items', itemsController.index);
 
 //criacao dos pontos de coleta
-routes.post('/points', async (request, response) => {
-  const {
-    name,
-    email,
-    whatsapp,
-    latitude,
-    longitude,
-    city,
-    uf,
-    items
-  } = request.body;
+routes.post('/points', pointsController.create);
 
+//listar todos pontos
+routes.get('/points', pointsController.index);
 
-  const trx = await knex.transaction();
-
-  const insertedIds = await trx('points').insert({
-    image: 'image-fake',
-    name,
-    email,
-    whatsapp,
-    latitude,
-    longitude,
-    city,
-    uf
-  });
-
-
-  const point_id = insertedIds[0];
-
-  const pointItems = items.map( (item_id: number) => {
-    return {//tuplas da tabela pivot
-      item_id,
-      point_id,
-    };
-  });
-  await trx('point_items').insert(pointItems);
-
-  return response.json({ success: true });
-
-});
+//mostrar um ponto especifico
+routes.get('/points/:id', pointsController.show);
 
 export default routes;
