@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { Map, TileLayer, Marker } from "react-leaflet";
 
-
 import './styles.css';
-
+import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 
+interface Item {
+  id: number;
+  title: string;
+  image_url: string;
+}
+
 const CreatePoint = () => {
+
+  const [items, setItems] = useState<Item[]>([]);
+  
+
+  useEffect(() => {
+    api.get('items').then(response => {
+      setItems(response.data);
+    });
+  } , []);
+
   return (
     <div id="page-create-point">
       <header>
@@ -97,30 +112,13 @@ const CreatePoint = () => {
           </legend>
 
           <ul className="items-grid">
-            <li>
-              <img src="http://localhost:3333/uploads/lampadas.svg" alt="lampadas"/>
-              <span>Óleo de Cozinha</span>
-            </li>
-            <li>
-              <img src="http://localhost:3333/uploads/baterias.svg" alt="baterias"/>
-              <span>Óleo de Cozinha</span>
-            </li>
-            <li>
-              <img src="http://localhost:3333/uploads/papeis-papelao.svg  " alt="papeis-papelao"/>
-              <span>Óleo de Cozinha</span>
-            </li>
-            <li>
-              <img src="http://localhost:3333/uploads/eletronicos.svg" alt="eletronicos"/>
-              <span>Óleo de Cozinha</span>
-            </li>
-            <li className="selected">
-              <img src="http://localhost:3333/uploads/organicos.svg" alt="organicos"/>
-              <span>Óleo de Cozinha</span>
-            </li>
-            <li>
-              <img src="http://localhost:3333/uploads/oleo.svg" alt="oleo"/>
-              <span>Óleo de Cozinha</span>
-            </li>
+            {items.map(items => (
+              <li key={items.id}>
+                <img src={items.image_url} alt={items.title}/>
+                <span>{items.title}</span>
+              </li>
+            ))}
+            
           </ul>
 
         </fieldset>
