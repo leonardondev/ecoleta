@@ -54,7 +54,6 @@ const Points = () => {
       loadPosition();
   },[]);
   
-
   useEffect(() => {
      api.get('items').then(response => {
       setItems(response.data);
@@ -79,7 +78,7 @@ const Points = () => {
   }
 
   function handleNavigateToDetail (id: number) {
-    navigation.navigate('Detail', { ponit_id: id });
+    navigation.navigate('Detail', { point_id: id });
   }
 
   function handleSelectItem(id: number) {
