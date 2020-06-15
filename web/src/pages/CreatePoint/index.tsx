@@ -196,7 +196,7 @@ const CreatePoint = () => {
             />
           </div>
           <div className="field">
-            <label htmlFor="whatsapp">WHatsapp</label>
+            <label htmlFor="whatsapp">Whatsapp</label>
             <input
               type="text"
               name="whatsapp"
