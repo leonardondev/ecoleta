@@ -5,8 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --transpileOnly --ignore-watch node_modules src/server.ts",
+    "start": "node build/server.js",
     "knex:seed": "knex --knexfile knexfile.ts seed:run",
-    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest"
+    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
+    "install:update": "ncu --interactive --format group",
+    "build": "rimraf build && tsc"
   },
   "keywords": [],
   "author": "Leonardo do Nascimento",
@@ -22,9 +25,9 @@
     "celebrate": "^12.1.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "knex": "^0.21.1",
+    "knex": "^0.95.0",
     "multer": "^1.4.2",
-    "sqlite3": "^4.2.0"
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
@@ -34,6 +37,8 @@
     "husky": "^4.2.5",
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.44",
+    "npm-check-updates": "^16.3.18",
+    "rimraf": "^3.0.2",
     "typescript": "^3.9.3"
   }
 }
