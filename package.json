@@ -1,0 +1,30 @@
+{
+  "name": "ecoleta",
+  "version": "1.0.0",
+  "description": "Monorepo ecoleta",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "homepage": "https://github.com/LeonardoFuba/NLW1#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeonardoFuba/NLW1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LeonardoFuba/NLW1/issues"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "scripts": {
+    "install:update": "ncu --interactive --format group"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "husky": "^8.0.2",
+    "npm-check-updates": "^16.6.2"
+  }
+}
