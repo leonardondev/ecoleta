@@ -1,17 +1,54 @@
-import path from 'path';
+import path from "path";
+import "dotenv/config";
 
-module.exports = {
-  client: 'sqlite3',
-  connection: {
-    filename: path.resolve(__dirname, 'src', 'database', 'database.sqlite'),
+const environment = process.env.NODE_ENV ?? "development";
+
+interface KnexConfig {
+  [key: string]: object;
+}
+
+const knexConfig: KnexConfig = {
+  production: {
+    client: "sqlite3",
+    connection: {
+      filename: path.resolve(__dirname, "src", "database", "database.sqlite"),
+    },
+    migrations: {
+      directory: path.resolve(__dirname, "src", "database", "migrations"),
+    },
+    seeds: {
+      directory: path.resolve(__dirname, "src", "database", "seeds"),
+    },
+    useNullAsDefault: true,
   },
 
-  migrations: {
-    directory: path.resolve(__dirname, 'src', 'database', 'migrations'),
+  development: {
+    client: "sqlite3",
+    connection: {
+      filename: path.resolve(__dirname, "src", "database", "database.sqlite"),
+    },
+    migrations: {
+      directory: path.resolve(__dirname, "src", "database", "migrations"),
+    },
+    seeds: {
+      directory: path.resolve(__dirname, "src", "database", "seeds"),
+    },
+    useNullAsDefault: true,
   },
 
-  seeds: {
-    directory: path.resolve(__dirname, 'src', 'database', 'seeds'),
+  test: {
+    client: "sqlite3",
+    connection: {
+      filename: path.resolve(__dirname, "src", "database", "test.sqlite"),
+    },
+    migrations: {
+      directory: path.resolve(__dirname, "src", "database", "migrations"),
+    },
+    seeds: {
+      directory: path.resolve(__dirname, "src", "database", "seeds"),
+    },
+    useNullAsDefault: true,
   },
-  useNullAsDefault: true,
 };
+
+export default knexConfig[environment];
