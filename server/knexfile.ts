@@ -1,37 +1,37 @@
-import path from "path";
+import { join } from "path";
 import "dotenv/config";
 
-const environment = process.env.NODE_ENV ?? "development";
+const BASE_PATH = join(__dirname, "src", "database");
 
-interface KnexConfig {
-  [key: string]: object;
-}
-
-const knexConfig: KnexConfig = {
+export default {
   production: {
-    client: "sqlite3",
+    client: "pg",
     connection: {
-      filename: path.resolve(__dirname, "src", "database", "database.sqlite"),
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME,
     },
     migrations: {
-      directory: path.resolve(__dirname, "src", "database", "migrations"),
+      directory: join(BASE_PATH, "migrations"),
     },
     seeds: {
-      directory: path.resolve(__dirname, "src", "database", "seeds"),
+      directory: join(BASE_PATH, "seeds"),
     },
     useNullAsDefault: true,
   },
 
   development: {
+    debug: true,
     client: "sqlite3",
     connection: {
-      filename: path.resolve(__dirname, "src", "database", "database.sqlite"),
+      filename: join(BASE_PATH, "database.sqlite"),
     },
     migrations: {
-      directory: path.resolve(__dirname, "src", "database", "migrations"),
+      directory: join(BASE_PATH, "migrations"),
     },
     seeds: {
-      directory: path.resolve(__dirname, "src", "database", "seeds"),
+      directory: join(BASE_PATH, "seeds"),
     },
     useNullAsDefault: true,
   },
@@ -39,16 +39,14 @@ const knexConfig: KnexConfig = {
   test: {
     client: "sqlite3",
     connection: {
-      filename: path.resolve(__dirname, "src", "database", "test.sqlite"),
+      filename: join(BASE_PATH, "test.sqlite"),
     },
     migrations: {
-      directory: path.resolve(__dirname, "src", "database", "migrations"),
+      directory: join(BASE_PATH, "migrations"),
     },
     seeds: {
-      directory: path.resolve(__dirname, "src", "database", "seeds"),
+      directory: join(BASE_PATH, "seeds"),
     },
     useNullAsDefault: true,
   },
 };
-
-export default knexConfig[environment];
